@@ -7,11 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* VOICE: a school disciplinary hearing, playful but serious; plain classroom English
-   IDEA: a manila case file with numbered exhibits and red rubber stamps
-   PICTURE: the open case folder with the 87% detector report and a stamp
-   COLOUR and TYPE: paper white + ink, folder yellow fields, stamp red accent; Archivo 800 + Inter
-   LAYOUT: role picker under the folder; each role, exhibit list, jury sheet and timer is its own view */
 :root{color-scheme:light dark;
 --bg:light-dark(#f7f5ef,#121318);--ink:light-dark(#15171c,#f1efe8);--muted:light-dark(#5b5e66,#a9abb3);
 --card:light-dark(#ffffff,#1c1e25);--line:light-dark(#e2dccb,#30333d);
@@ -73,8 +68,8 @@ textarea{width:100%;font:16px Inter;padding:10px;border-radius:10px;border:2px s
 .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .note{font-size:14px;color:var(--muted)}
 @media(max-width:760px){.hero,.cols{grid-template-columns:minmax(0,1fr)}.facts{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:600px){.score thead{display:none}#score tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}#score td{border:0;padding:4px 0}#score td:first-child,.score tfoot td:first-child{grid-column:1/-1;font-weight:600}.score tfoot tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.score tfoot td{padding:6px 0}.m{display:block}}
 .m{display:none;font-size:13px;color:var(--muted)}
+@media(max-width:600px){.score thead{display:none}#score tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}#score td{border:0;padding:4px 0}#score td:first-child,.score tfoot td:first-child{grid-column:1/-1;font-weight:600}.score tfoot tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.score tfoot td{padding:6px 0}.m{display:block}}
 @media(max-width:420px){.roles{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
@@ -85,8 +80,8 @@ textarea{width:100%;font:16px Inter;padding:10px;border-radius:10px;border:2px s
   <div>
     <div class="stampt">Academic Integrity Hearing</div>
     <h1>The School vs. Diego</h1>
-    <p class="lead">An AI detector says Diego's essay is 87% AI. Diego says he wrote it. Today, you decide.</p>
-    <p><b>Step 1.</b> Read the <a href="#case">case file</a>. <b>Step 2.</b> Open your role card.</p>
+    <p class="lead">An AI detector says Diego's essay is 87% AI. Diego says he wrote it himself. You decide who's right.</p>
+    <p>When the judge asks, count off from 1 to 4. Your number is your group. Read the <a href="#case">case file</a> first, then open your group's card.</p>
     <div class="roles" id="rolepick"></div>
   </div>
   <div class="fig" aria-label="An open case folder showing an AI detector report with 87 percent and a red stamp">
@@ -104,7 +99,7 @@ textarea{width:100%;font:16px Inter;padding:10px;border-radius:10px;border:2px s
         <rect x="132" y="258" width="226" height="8" rx="4" fill="var(--line)"/>
         <rect x="132" y="276" width="190" height="8" rx="4" fill="var(--line)"/>
         <rect x="132" y="294" width="210" height="8" rx="4" fill="var(--line)"/>
-        <text x="132" y="324" font-family="Inter" font-size="9" fill="var(--muted)">*Results are an estimate. Not proof.</text>
+        <text x="132" y="324" font-family="Inter" font-size="9" fill="var(--muted)">*This result is an estimate only.</text>
       </g>
       <path d="M40 252h420v112H40z" fill="url(#g)"/>
       <path d="M40 252h420" stroke="var(--folder2)" stroke-width="3"/>
@@ -148,7 +143,7 @@ textarea{width:100%;font:16px Inter;padding:10px;border-radius:10px;border:2px s
 <section id="jury"><div class="band">
   <div class="file" data-tab="Jury sheet">
     <h2>Jury score sheet</h2>
-    <p>Listen to both sides. Give each one 1 to 3 points per criterion. Then discuss and choose a verdict as a group.</p>
+    <p>Group 1, five of you (six if the teacher joins). While the others talk, give each side 1 to 3 points per row. After the experts, you get one minute to agree on a verdict, and your foreperson reads it to the class.</p>
     <table class="score"><thead><tr><th>Criterion</th><th>Prosecution</th><th>Defense</th></tr></thead><tbody id="score"></tbody>
     <tfoot><tr><td><b>Total</b></td><td><small class="m">Prosecution</small><span class="tot" id="tP">0</span></td><td><small class="m">Defense</small><span class="tot" id="tD">0</span></td></tr></tfoot></table>
     <h3 style="margin-top:24px">Your verdict</h3>
@@ -173,7 +168,7 @@ textarea{width:100%;font:16px Inter;padding:10px;border-radius:10px;border:2px s
 
 <section id="judge"><div class="band">
   <h2>Court timer</h2>
-  <p class="note">For the facilitators. Project this screen or keep it on one phone. Tap a phase to jump to it.</p>
+  <p class="note">For the three of us running the class. Project it or keep it on one phone, and tap a phase to jump to it. Groups for 17 students: 1 = Jury (5), 2 = Prosecution (4), 3 = Defense (4), 4 = Experts (4). The teacher can watch, or join the jury as foreperson.</p>
   <div class="clock" id="clock" aria-live="polite">2:00</div>
   <div class="bar"><i id="barfill"></i></div>
   <p style="text-align:center;font-weight:600;margin:10px auto;max-width:none" id="phname"></p>
@@ -196,24 +191,24 @@ const exhibits=[
  {id:'D',t:"Diego's statement",side:'Helps: Defense',b:'',q:'"I wrote every idea myself. English is my second language, so I pasted my paragraphs into ChatGPT to fix the grammar. I thought that was like using a spell checker."'},
  {id:'E',t:"Teacher's statement",side:'Helps: Prosecution',b:'',q:'"Diego\'s earlier essays had many grammar mistakes. This one is perfect, and the style is completely different. It doesn\'t sound like him."'},
  {id:'F',t:'ChatGPT history (shared by Diego)',side:'Helps: both sides',b:'Diego shared 3 chats. In all of them he wrote: <i>"Fix the grammar of this paragraph. Don\'t change my ideas."</i> He did not share his full history, so we can\'t see every chat.'},
- {id:'G',t:'Expert fact sheet: AI detectors',side:'Used by: Experts',b:'<ul style="padding-left:18px;margin:6px 0"><li>Detectors give a <b>probability</b>, not proof.</li><li>They produce <b>false positives</b>: they sometimes flag human writing as AI.</li><li>A Stanford study (2023) found detectors flagged <b>more than half</b> of essays by non-native English writers as AI.</li><li>Grammar tools can make human writing look more "AI-like".</li></ul>'}
+ {id:'G',t:'Expert fact sheet: AI detectors',side:'Used by: Experts',b:'<ul style="padding-left:18px;margin:6px 0"><li>A detector gives a <b>probability</b>. It cannot show who actually wrote a text.</li><li>They produce <b>false positives</b>: they sometimes flag human writing as AI.</li><li>A Stanford study (2023) found detectors flagged <b>more than half</b> of essays by non-native English writers as AI.</li><li>Grammar tools can make human writing look more "AI-like".</li></ul>'}
 ];
 const roles={
- prosecution:{name:'Prosecution',c:'var(--stamp)',who:'You represent the school.',goal:'Convince the jury that Diego broke the academic integrity rules.',ex:['A','B','E'],tips:['The 400 words pasted at 11:48 p.m. are your strongest point. Ask: where did they come from?','Ask the experts one question that helps you.'],st:['We believe Diego broke the rules because…','Exhibit __ shows that…','If the ideas were his, why…?','A fair consequence would be…']},
- defense:{name:'Defense',c:'var(--blue)',who:'You represent Diego.',goal:'Convince the jury that Diego is not responsible, or that the penalty is unfair.',ex:['B','C','D','F'],tips:['The rule never mentions AI. Can you punish someone for a rule that wasn\'t clear?','Remember the presumption of innocence: the school must prove it.'],st:['Diego is not guilty because…','Exhibit __ proves that…','The rule does not say…','Even if Diego made a mistake, the penalty is too harsh because…']},
- experts:{name:'Expert witnesses',c:'var(--folder2)',who:'You are neutral technology experts.',goal:'Explain to the court what the AI detector can and cannot prove. You do not take sides.',ex:['A','G','B'],tips:['Prepare a 1-minute explanation in simple words.','You will answer one question from each side. Stay neutral!'],st:['An AI detector works by…','87% means… It does not mean…','The detector could be wrong because…','To know for sure, the school could also…']},
- jury:{name:'Jury',c:'var(--ink)',who:'You are the jury.',goal:'Listen carefully, score both sides, and decide the verdict together.',ex:['A','B','C','D','E','F','G'],tips:['Read all exhibits quickly while the other groups prepare.','Score arguments, not people. Use the jury sheet.'],st:['The strongest argument was…','We were convinced by Exhibit __ because…','Our verdict is… because…']}
+ prosecution:{q:'Prepare <b>1 question</b> for the experts.',g:2,n:4,jobs:'one speaker (1.5 minutes), one person who asks the experts your question, and two who look for evidence in the exhibits.',name:'Prosecution',c:'var(--stamp)',who:'You represent the school.',goal:'Convince the jury that Diego broke the academic integrity rules.',ex:['A','B','E'],tips:['The 400 words pasted at 11:48 p.m. are your strongest point. Ask: where did they come from?','If Diego only fixed his grammar, why did he share just 3 of his chats?'],st:['We believe Diego broke the rules because…','Exhibit __ shows that…','If the ideas were his, why…?','A fair consequence would be…']},
+ defense:{q:'Prepare <b>1 question</b> for the experts.',g:3,n:4,jobs:'one speaker (1.5 minutes), one person who asks the experts your question, and two who look for evidence in the exhibits.',name:'Defense',c:'var(--blue)',who:'You represent Diego.',goal:'Convince the jury that Diego is not responsible, or that the penalty is unfair.',ex:['B','C','D','F'],tips:['The rule never mentions AI. Can you punish someone for a rule that wasn\'t clear?','Remember the presumption of innocence: the school must prove it.'],st:['Diego is not guilty because…','Exhibit __ proves that…','The rule does not say…','Even if Diego made a mistake, the penalty is too harsh because…']},
+ experts:{q:'Guess what each side will ask you and prepare short answers.',g:4,n:4,jobs:'two people explain the detector to the court (1 minute in total), and two answer the questions from each side.',name:'Expert witnesses',c:'var(--folder2)',who:'You are neutral technology experts.',goal:'Explain to the court what the AI detector can and cannot prove. You do not take sides.',ex:['A','G','B'],tips:['Prepare a 1-minute explanation in simple words.','You will answer one question from each side. Stay neutral!'],st:['An AI detector works by…','87% means… It does not mean…','The detector could be wrong because…','To know for sure, the school could also…']},
+ jury:{g:1,n:5,name:'Jury',c:'var(--ink)',who:'You are the jury.',goal:'Listen carefully, score both sides, and decide the verdict together.',ex:['A','B','C','D','E','F','G'],tips:['Read all exhibits quickly while the other groups prepare.','Give points for the arguments, even if you like one side more.'],st:['The strongest argument was…','We were convinced by Exhibit __ because…','Our verdict is… because…']}
 };
 const nav=[['home','Start'],['case','Case'],['exhibits','Exhibits'],['prosecution','Prosecution'],['defense','Defense'],['experts','Experts'],['jury','Jury'],['exit','Exit ticket'],['judge','Timer']];
 $('#nav').innerHTML=nav.map(([h,l])=>`<a href="#${h}" data-h="${h}">${l}</a>`).join('');
-$('#rolepick').innerHTML=Object.entries(roles).map(([k,r])=>`<a class="btn role" style="--c:${r.c}" href="#${k}"><b>${r.name}</b><span>${r.who}</span></a>`).join('');
+$('#rolepick').innerHTML=Object.entries(roles).map(([k,r])=>`<a class="btn role" style="--c:${r.c}" href="#${k}"><b>${r.name}</b><span>Group ${r.g} · ${r.n} people. ${r.who}</span></a>`).join('');
 const exCard=e=>`<article class="exh" id="ex-${e.id}"><span class="tag">Exhibit ${e.id}</span><h3>${e.t}</h3>${e.b?`<div>${e.b}</div>`:''}${e.q?`<q>${e.q}</q>`:''}<div class="side">${e.side}</div></article>`;
 $('#exlist').innerHTML=exhibits.map(exCard).join('');
 for(const [k,r] of Object.entries(roles)){
   if(k==='jury')continue;
   $('#'+k).innerHTML=`<div class="band"><div class="file" data-tab="Role card" style="border-left:8px solid ${r.c}">
   <h2>${r.name}</h2><p class="lead">${r.who} <b>Your mission:</b> ${r.goal}</p>
-  <div class="cols"><div><h3>Your plan (3 minutes)</h3><ol><li>Read your key exhibits below.</li><li>Write <b>2 arguments</b>, each with an exhibit.</li><li>Prepare <b>1 question</b> for another group.</li><li>Choose a <b>speaker</b>. You have 1.5 minutes.</li></ol>
+  <div class="cols"><div><h3>Your plan (3 minutes)</h3><ol><li>Read your key exhibits below.</li><li>Write <b>2 arguments</b>, each with an exhibit.</li><li>${r.q}</li><li>Split the jobs: ${r.jobs}</li></ol>
   <h3>Tips</h3><ul>${r.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>
   <div><h3>Sentence starters</h3><ul class="starters">${r.st.map(s=>`<li>${s}</li>`).join('')}</ul></div></div>
   <h3 style="margin-top:18px">Your key exhibits</h3><div class="ex">${exhibits.filter(e=>r.ex.includes(e.id)).map(exCard).join('')}</div></div></div>`;
@@ -239,9 +234,9 @@ drawJury();
 
 /* exit ticket */
 const qs=[
- {q:'An AI detector says an essay is "87% AI". What does that mean?',o:['It is proof that the student cheated.','It is an estimate, and it can be wrong.','87% of the essay was copied from the internet.'],a:1,w:'Detectors give a probability, not proof. They can produce false positives.'},
- {q:'Which use of AI is most clearly dishonest?',o:['Asking AI to explain a difficult concept.','Using AI to check grammar and saying that you did.','Submitting an AI-written essay as your own work.'],a:2,w:'The line is honesty: presenting AI work as your own is the problem, not the tool.'},
- {q:'Why do schools need clear rules about AI before punishing students?',o:['Because it is not fair to punish someone for breaking a rule that was not clear.','Because clear rules make AI detectors more accurate.','Because teachers prefer long rules.'],a:0,w:'Due process: rules must be clear beforehand, and students have the right to be heard.'}
+ {q:'An AI detector says an essay is "87% AI". What does that mean?',o:['It is proof that the student cheated.','It is an estimate, and it can be wrong.','87% of the essay was copied from the internet.'],a:1,w:'A detector only estimates. It can flag a text written by a person as AI.'},
+ {q:'Which use of AI is most clearly dishonest?',o:['Asking AI to explain a difficult concept.','Using AI to check grammar and saying that you did.','Submitting an AI-written essay as your own work.'],a:2,w:'Using AI is not the problem. Handing in AI work as if you wrote it is.'},
+ {q:'Why do schools need clear rules about AI before punishing students?',o:['Because it is not fair to punish someone for breaking a rule that was not clear.','Because clear rules make AI detectors more accurate.','Because teachers prefer long rules.'],a:0,w:'That is due process: students need to know the rule before it is used against them, and they get to tell their side.'}
 ];
 let ans=store.get('exit',{});
 function drawQuiz(){
